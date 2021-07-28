@@ -1,0 +1,77 @@
+#include<bits/stdc++.h>
+#define ri register int
+#define Int inline int
+#define Void inline void
+#define Bool inline bool
+#define LL inline long long
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+const int N = 1e5 + 5;
+int n, top;
+double ans;
+struct Vector{
+	double x, y;
+	Vector() {}
+	Vector(double x, double y): x(x), y(y) {}
+}point[N], stk[N];
+template<typename T>
+inline T read(){
+	T n = 0; int f = 1; char ch = getchar();
+	while(!isdigit(ch)){
+		if(ch == '-') f = -1;
+		ch = getchar();
+	}
+	while(isdigit(ch)){
+		n = n * 10 + ch - '0';
+		ch = getchar();
+	}
+	return f * n;
+}
+template<typename T>
+void write(T n){
+	if(n/10) write(n/10);
+	putchar(n%10+'0');
+}
+void input() {}
+template<typename Type, typename... Types>
+void input(Type& arg, Types&... args){
+	arg = read<Type>();
+	input(args...);
+}
+Bool cmp(Vector a, Vector b){
+	return a.x == b.x ? a.y < b.y : a.x < b.x;
+}
+inline double dis(Vector a, Vector b){
+	return sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y));
+}
+inline double cross(Vector a, Vector b){
+	return a.x * b.y - b.x * a.y;
+}
+inline double side(Vector a, Vector b, Vector c){
+	Vector t1 = Vector(b.x - a.x, b.y - a.y);
+	Vector t2 = Vector(c.x - a.x, c.y - a.y);
+	return cross(t1, t2);
+}
+int main(){
+	input(n);
+	for(ri i = 0; i < n; i++) cin >>point[i].x >> point[i].y;
+	sort(point, point + n, cmp);
+	stk[0] = point[0], stk[1] = point[1];
+	top = 2;
+	for(ri i = 2; i < n; i++){
+		while(top > 1 && side(stk[top-2], stk[top-1], point[i]) >= 0) top--;
+		stk[top++] = point[i];
+	}
+	for(ri i = 1; i < top; i++) ans += dis(stk[i-1], stk[i]);
+	stk[0] = point[0], stk[1] = point[1];
+	top = 2;
+	for(ri i = 2; i < n; i++){
+		while(top > 1 && side(stk[top-2], stk[top-1], point[i]) <= 0) top--;
+		stk[top++] = point[i];
+	}
+	for(ri i = 1; i < top; i++) ans += dis(stk[i-1], stk[i]);
+	cout << fixed << setprecision(2) << ans << endl;
+	return 0;
+}
+
