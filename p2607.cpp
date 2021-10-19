@@ -11,7 +11,7 @@ typedef unsigned long long ull;
 typedef pair<int, int> pii;
 const int MOD = 998244353;
 const int inf = 0x3f3f3f3f;
-const int N = 100005;
+const int N = 1000005;
 template<typename T>
 inline T read(){
 	T n = 0; int f = 1; char ch = getchar();
@@ -37,7 +37,46 @@ void input(Type &arg, Types&... args){
 	input(args...);
 }
 namespace Main{
+	int n, root, val[N], fa[N];
+	ll ans, f[N][2];
+	bool vis[N];
+	vector<int> son[N];
+	void dfs(int u){
+		vis[u] = true;
+		f[u][0] = 0;
+		f[u][1] = val[u];
+		for(ri i = 0; i < son[u].size(); i++){
+			int v = son[u][i];
+			if(v != root){
+				dfs(v);
+				f[u][0] += max(f[v][0], f[v][1]);
+				f[u][1] += f[v][0];
+			}
+			else f[v][1] = -inf;
+		}
+	}
+	void solve(int u){
+		root = u;
+		vis[u] = true;
+		while(!vis[fa[root]]){
+			root = fa[root];
+			vis[root] = true;
+		}
+		dfs(root);
+		ll tmp = f[root][0];
+		root = fa[root];
+		dfs(root);
+		ans += max(tmp, f[root][0]);
+	}
 	void Main(){
+		input(n);
+		for(ri i = 1, v; i <= n; i++){
+			input(val[i], v);
+			son[v].push_back(i);
+			fa[i] = v;
+		}
+		for(ri i = 1; i <= n; i++) if(!vis[i]) solve(i);
+		write(ans);
 		return;
 	}
 } // namespace

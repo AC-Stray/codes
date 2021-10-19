@@ -10,7 +10,8 @@ Liuxizai's OI Codes
 - `uva` - UVA
 - `loj` - LOJ
 - `uoj` - UOJ
-- `hsy` - HSYOJ
+- `hsyoj` - HSYOJ
 - `hdu` - HDUOJ
+- `bz` - BZOJ / Darkbzoj
 - `template` - OI Code Template
 

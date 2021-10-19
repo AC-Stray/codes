@@ -11,7 +11,7 @@ typedef unsigned long long ull;
 typedef pair<int, int> pii;
 const int MOD = 998244353;
 const int inf = 0x3f3f3f3f;
-const int N = 100005;
+const int N = 700005;
 template<typename T>
 inline T read(){
 	T n = 0; int f = 1; char ch = getchar();
@@ -37,7 +37,16 @@ void input(Type &arg, Types&... args){
 	input(args...);
 }
 namespace Main{
+	ll n, d, p, ans = 1, a[N];
 	void Main(){
+		input(n, d);
+		for(ri i = 0; i < n; i++) input(a[i]);
+		sort(a, a + n);
+		for(ri i = 0; i < n; i++){
+			while(a[i] - a[p] > d) p++;
+			ans = ans * (i - p + 1) % MOD;
+		}
+		write(ans);
 		return;
 	}
 } // namespace
