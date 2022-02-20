@@ -1,8 +1,14 @@
 #include<bits/stdc++.h>
 #define File(name) freopen(#name".in", "r", stdin); freopen(#name".out", "w", stdout);
+#define ri int
+#define Int inline int
+#define Void inline void
+#define Bool inline bool
+#define LL inline long long
 using namespace std;
-using ll = long long;
-using ull = unsigned long long;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef pair<int, int> pii;
 template<typename T>
 inline T read(){
     T n = 0; int f = 1; char ch = getchar();
@@ -28,7 +34,27 @@ void input(Type &arg, Types&... args){
     input(args...);
 }
 namespace Main{
+    const int N = 105;
+    const int L = 30;
+    ll k, sum, a[N];
+    struct linearBasis{
+        int t[L];
+        bool insert(int x){
+            int save = x;
+            for(ri i = L - 1; i >= 0; i--){
+                if(!(x >> i & 1)) continue;
+                if(!t[i]) return t[i] = x, true;
+                else x ^= t[i];
+            }
+            return false;
+        }
+    }lb;
     void Main(){
+        input(k);
+        for(ri i = 0; i < k; i++) input(a[i]);
+        sort(a, a + k, greater<int>());
+        for(ri i = 0; i < k; i++) if(!lb.insert(a[i])) sum += a[i];
+        write(sum);
         return;
     }
 } // namespace

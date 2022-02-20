@@ -1,8 +1,17 @@
 #include<bits/stdc++.h>
 #define File(name) freopen(#name".in", "r", stdin); freopen(#name".out", "w", stdout);
+#define ri register int
+#define Int inline int
+#define Void inline void
+#define Bool inline bool
+#define LL inline long long
 using namespace std;
-using ll = long long;
-using ull = unsigned long long;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef pair<int, int> pii;
+const int MOD = 998244353;
+const int inf = 0x3f3f3f3f;
+const int N = 100005;
 template<typename T>
 inline T read(){
     T n = 0; int f = 1; char ch = getchar();
@@ -28,7 +37,12 @@ void input(Type &arg, Types&... args){
     input(args...);
 }
 namespace Main{
+    ll a, p;
     void Main(){
+        input(a);
+        p = (ll)1e18 % a * 9 % a * 9 % a;
+        write(a - p), putchar(' ');
+        write((ll)1e18 + a - p - 1);
         return;
     }
 } // namespace

@@ -23,20 +23,35 @@ void write(T n){
 }
 void input() {}
 template<typename Type, typename... Types>
-void input(Type &arg, Types&... args){
+void input(Type& arg, Types&... args){
     arg = read<Type>();
     input(args...);
 }
 namespace Main{
+    const int N = 200005;
+    ll n, q, a[N], c[N];
     void Main(){
+        input(n);
+        for(int i = 1; i <= n; i++){
+            input(a[i]);
+            c[i] = 1;
+            while(~a[i] & 1) a[i] >>= 1, c[i] <<= 1;
+        }
+        for(int i = 2; i <= n; i++) c[i] += c[i-1];
+        input(q);
+        while(q--){
+            ll p = read<ll>();
+            write(a[lower_bound(c + 1, c + n + 1, p) - c]);
+            puts("");
+        }
         return;
     }
-} // namespace
+}
 int main(){
-#ifdef Liuxizai
+    #ifdef Liuxizai
     freopen("in", "r", stdin);
     freopen("out", "w", stdout);
-#endif // Liuxizai
+    #endif
     Main::Main();
     return 0;
 }

@@ -1,8 +1,14 @@
 #include<bits/stdc++.h>
 #define File(name) freopen(#name".in", "r", stdin); freopen(#name".out", "w", stdout);
+#define ri int
+#define Int inline int
+#define Void inline void
+#define Bool inline bool
+#define LL inline long long
 using namespace std;
-using ll = long long;
-using ull = unsigned long long;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef pair<int, int> pii;
 template<typename T>
 inline T read(){
     T n = 0; int f = 1; char ch = getchar();
@@ -28,7 +34,25 @@ void input(Type &arg, Types&... args){
     input(args...);
 }
 namespace Main{
+    const int N = 1005;
+    int t, n, ans, a[N][N];
+    bool c[N][N];
     void Main(){
+        input(t);
+        while(t--){
+            ans = 0;
+            memset(c, 0, sizeof(c));
+            input(n);
+            for(int i = 1; i <= n; i++) for(int j = 1; j <= n; j++) input(a[i][j]);
+            for(int i = 2; i <= n; i++) for(int j = 1; j <= n; j++){
+                if(!c[i-1][j]){
+                    ans ^= a[i][j];
+                    c[i-1][j] ^= 1, c[i+1][j] ^= 1;
+                    c[i][j-1] ^= 1, c[i][j+1] ^= 1;
+                }
+            }
+            write(ans), puts("");
+        }
         return;
     }
 } // namespace
